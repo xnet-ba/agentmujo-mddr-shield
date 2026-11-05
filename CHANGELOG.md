@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.0 — 2026-11-05
+- Novo: T9 `sbom-inventory` (pip/npm/dpkg/docker → JSON, read-only).
+- Uživo na test-labu: 93/10/1541/19.
+
 ## 1.6.0 — 2026-11-05
 - Novo: T8 `shield-status` — kompozitor postojećih izlaza u jednu stranicu (bez nove logike prikupljanja).
 

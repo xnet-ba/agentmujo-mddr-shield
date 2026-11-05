@@ -1,7 +1,7 @@
 {
   "name": "agentmujo-mddr-shield",
   "display_name": "AgentMujo MDDR Shield",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "platform": "opencode",
   "type": "skill-tool-pack",
   "source_report": "Microsoft Digital Defense Report 2026 v1.1 (July 2025 - June 2026)",
@@ -22,7 +22,8 @@
     {"name": "tls-inventory", "description": "TLS/cert/HSTS inventory across domains (read-only)"},
     {"name": "agent-manifest", "description": "Agent manifest linter, S2-baseline compatible"},
     {"name": "canary-tripwire", "description": "Deploy and verify tripwire canaries"},
-    {"name": "shield-status", "description": "One-page summary composing existing tool outputs"}
+    {"name": "shield-status", "description": "One-page summary composing existing tool outputs"},
+    {"name": "sbom-inventory", "description": "Software inventory: pip/npm/dpkg/docker to JSON (read-only)"}
   ],
   "servers": [
     {"name": "threat-feed-mcp", "description": "Read-only MCP server over the local threat-indicator feed (stdio)"}

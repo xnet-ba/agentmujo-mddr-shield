@@ -168,6 +168,15 @@ python3 tools/canary-tripwire/canary.py check   # OK ili TRIP + lista
 
 Inertni mamci (bez pravih kredencijala), dnevna provjera, na TRIP se ide po B6 runbooku.
 
+### T9 · ✅ `sbom-inventory` — šta je instalirano (prioritet 8)
+
+```bash
+python3 tools/sbom-inventory/sbom.py --snap sbom.json
+# → pip:93 npm:10 dpkg:1541 docker:19 (primjer s test-laba)
+```
+
+Read-only: `pip freeze` + `npm ls -g` + `dpkg -l` + `docker images` u jedan JSON. Nedostaje alat → preskače se.
+
 ### T8 · ✅ `shield-status` — jedan pogled na sistem
 
 ```bash
