@@ -1,0 +1,5 @@
+CVE-2020-1472 was widely exploited. Qilin and Akira affiliates
+kept 80-85% of ransom. Tycoon2FA phishing kits evolved. ClickFix
+lures spread via TikTok. Memory poisoning persists across sessions.
+===== PAGE 7 =====
+Password spray attacks continue. Spear phishing at scale.
