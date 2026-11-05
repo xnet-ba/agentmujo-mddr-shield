@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.1 — 2026-11-05
+- Fix: server podrzava i `sources` (novi feed-format) i `source` (stari seed).
+- C1 dogfood na TestLab test-diru: deploy → OK → TRIP → ciscenje.
+
 ## 1.5.0 — 2026-11-05
 - Novo: `build_feed.py` — spajanje više iocs.json u jedan feed (dedup, više izvora).
 - T1→T3 pipeline zatvoren: extract → build_feed → MCP server.

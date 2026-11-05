@@ -48,7 +48,8 @@ def call(name, args):
         by_type = {}
         for i in inds:
             by_type[i["type"]] = by_type.get(i["type"], 0) + 1
-        return {"source": DATA.get("source"), "total": len(inds), "by_type": by_type}
+        src = DATA.get("source") or DATA.get("sources")
+        return {"source": src, "total": len(inds), "by_type": by_type}
     return {"error": f"unknown tool: {name}"}
 
 

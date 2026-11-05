@@ -80,5 +80,17 @@ with tempfile.TemporaryDirectory() as t:
                        capture_output=True, text=True)
     check("c1 trip detected", r.returncode != 0 and "TRIP" in r.stdout)
 
+# --- T3: sources-format feed compat via stdio ---
+with tempfile.TemporaryDirectory() as t:
+    fp = os.path.join(t, "feed.json")
+    json.dump({"sources": ["A", "B"],
+               "indicators": [{"type": "cve", "value": "CVE-1", "page": 1}]},
+              open(fp, "w"))
+    q = '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"threat_stats","arguments":{}}}\n'
+    r = subprocess.run([sys.executable, os.path.join(REPO, "servers", "threat-feed-mcp", "server.py"), fp],
+                       input=q, capture_output=True, text=True)
+    got = json.loads(json.loads(r.stdout)["result"]["content"][0]["text"])["source"]
+    check("t3 sources-format", got == ["A", "B"])
+
 print("FAILURES:", failures if failures else "none")
 sys.exit(1 if failures else 0)
