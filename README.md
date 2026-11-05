@@ -174,6 +174,10 @@ Priključak na OpenCode (`opencode.json → mcp`):
 ```bash
 git clone https://github.com/xnet-ba/agentmujo-mddr-shield.git
 cd agentmujo-mddr-shield
+./install.sh            # skills + MCP + data dir, idempotentno, uz backup
+# ./uninstall.sh        # potpuno uklanjanje, cuva rucne izmjene skillova
+```
+Radi na **bilo kojem OpenCode agentu**: staze se izvode iz `$HOME`, jedina zavisnost je `python3` (stdlib) i `openssl` za B2. test server nam služi kao test-poligon — installer je ovdje verificiran.
 # 1. Pokreni checklistu (S1) nad svojom infrastrukturom
 # 2. Uključi audit-log (T2): export AGENT_AUDIT_LOG=./audit.jsonl
 # 3. Ekstrahuj indikatore iz bilo kojeg izvještaja (T1)

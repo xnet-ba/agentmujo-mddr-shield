@@ -15,7 +15,7 @@ Polja: `ts` (ISO-8601), `agent` (ko), `tool` (koji alat), `action` (skraćeno, b
 ## Logger
 
 `alog.sh` — append-only upis: `alog.sh AGENT TOOL "ACTION" [RESULT]` (detalj u fajlu).
-Log: `/home/user/kpro-lab/agent-audit-log/audit.jsonl` (default, može preko `AGENT_AUDIT_LOG`).
+Log: `~/.local/share/mddr-shield/audit.jsonl` (default, može preko `AGENT_AUDIT_LOG`).
 Rotacija: mjesečna, `audit-YYYY-MM.jsonl`; bez novih servisa — ručno ili postojeći cron.
 
 ## Baseline pravila (v1, pragovi se kalibriraju nakon 2 sedmice logova)
