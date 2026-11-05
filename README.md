@@ -4,7 +4,7 @@
 
 ### Operativni security-pack izveden iz Microsoft Digital Defense Report 2026
 
-**4 skills · 2 CLI alata · 1 MCP server — sve testirano, bez vanjskih zavisnosti**
+**7 skills · 10 alata · 1 MCP server — sve testirano, stdlib only**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-OpenCode-blue.svg)](https://opencode.ai)
@@ -12,7 +12,9 @@
 [![Tools](https://img.shields.io/badge/Tools-2-purple.svg)](#-tools)
 [![MCP](https://img.shields.io/badge/MCP-stdio-red.svg)](#-mcp-server)
 [![Source](https://img.shields.io/badge/Source-MDDR_2026-grey.svg)](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf)
-[![Status](https://img.shields.io/badge/Status-v1.0.0_stable-success.svg)](#)
+[![Status](https://img.shields.io/badge/Status-v1.10_stable-success.svg)](#)
+[![Skills](https://img.shields.io/badge/Skills-7-orange.svg)](#-skills)
+[![Tools](https://img.shields.io/badge/Tools-10-purple.svg)](#-tools)
 
 | 🧠 Skills (znanje) | 🔧 Tools (izvršno) | 🌐 MCP |
 |:--|:--|:--|
@@ -76,7 +78,7 @@ agentmujo-mddr-shield/
 | 📥 Ulaz | Popis sistema (npr. `test-node, test-laptop`) |
 | 📤 Izlaz | Status-tabela + lista stavki za potvrdu + trigger sljedeće provjere |
 | 📦 Zavisnosti | Nema |
-| 💡 Primjer | `Prioritet 2 → panel MFA: prazno 🔴 (panel user-show command)` |
+| 💡 Primjer | `Prioritet 2 → panel 2FA: iskljčen 🔴 (provjereno panel-CLI-jem)` |
 | 🔁 Reuse | Svaki budući audit, svaki novi servis |
 
 ### S2 · ✅ `agent-baseline-monitor` — vidi anomaliju koja liči na normalu
@@ -144,11 +146,11 @@ Read-only, stdlib, Linux: `ss` + `docker` → klasifikacija `localhost/private/p
 ### T5 · ✅ `tls-inventory` — certovi i TLS na svim domenama
 
 ```bash
-python3 tools/tls-inventory/tls_inventory.py example-lab.local baza.example-lab.local
+python3 tools/tls-inventory/tls_inventory.py portal.example api.example
 # → TLS verzija, subject/issuer, dani do isteka, tip ključa, HSTS
 ```
 
-Read-only (openssl + stdlib). Uživo: LE certovi uredni (~50 dana), ali `baza.example-lab.local` **nema HSTS** — zabilježeno kao nalaz.
+Read-only (openssl + stdlib). Uživo na test-labu: LE certovi uredni, ali API domena **nema HSTS** — zabilježeno kao nalaz.
 
 ### T6 · ✅ `agent-manifest` — red za svakog agenta
 
@@ -256,13 +258,13 @@ cd agentmujo-mddr-shield
 # ./uninstall.sh        # potpuno uklanjanje, cuva rucne izmjene skillova
 ```
 Radi na **bilo kojem OpenCode agentu**: staze se izvode iz `$HOME`, jedina zavisnost je `python3` (stdlib) i `openssl` za B2. test server nam služi kao test-poligon — installer je ovdje verificiran.
+```bash
 # 1. Pokreni checklistu (S1) nad svojom infrastrukturom
 # 2. Uključi audit-log (T2): export AGENT_AUDIT_LOG=./audit.jsonl
 # 3. Ekstrahuj indikatore iz bilo kojeg izvještaja (T1)
 python3 tools/ioc-extract/ioc_extract.py izvestaj.txt -o iocs.json
-# 4. Testiraj MCP server
-echo '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
-  | python3 servers/threat-feed-mcp/server.py
+# 4. Jednom komandom provjeri sistem (T10)
+python3 tools/shield-audit/audit.py --hosts $(cat domains.txt) --out-dir ./audit
 ```
 
 ### S5 · ✅ `attachment-risk-check` · S6 · ✅ `ir-runbooks-mdrr` · S7 · ✅ `canary-tripwire`
@@ -275,7 +277,7 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
 
 <div align="center">
 
-## ✔️ Verifikacija (v1.0.0)
+## ✔️ Verifikacija (v1.10 — 58 asserta, svi zeleni)
 
 </div>
 
@@ -285,6 +287,10 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
 | T2 `alog.sh` | Self-test upis + čitanje | ✅ validan JSONL red |
 | T3 `server.py` | initialize → tools/list → stats → lookup | ✅ sva 4 odgovora ispravna |
 | S1–S4 | Format SKILL.md (Purpose/Guidance/Expected Output) | ✅ kompatibilno s OpenCode + skills-packs |
+| T4–T9 | Fixture + live testovi + install round-trip | ✅ vidi tests/ |
+| T10 `audit.py` | E2E runner na test-labu | ✅ report.json + 4 artefakta |
+| T3 `server.py` | 8 slucajeva (bad input, notifikacije, malformed feed) | ✅ bez pada |
+| T11 `match.py` | Offline parsing + live OSV | ✅ + upozorenje o pokrivenosti |
 
 <div align="center">
 
@@ -295,6 +301,8 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
 - Brojke iz MDDR-a su **Microsoftova vendor-telemetrija** — citirati uz izvor, ne kao globalne.
 - Projekcije (npr. "milijarda agenata do 2028") su nedokazane i tako su označene.
 - Drill-skill (S3) nikad ne šalje stvarni phishing bez pisane potvrde.
+- Mreža: samo T11 kontaktira vanjski servis (OSV.dev, javna imena+verzije paketa, bez ključa); sve ostalo radi offline.
+- T8/T10 sažimaju postojeće izlaze; prazan ulaz = status `unknown`, ne `0`.
 - Preporuke skalirane na malu infrastrukturu; enterprise okruženja prilagođavaju pragove.
 
 <div align="center">

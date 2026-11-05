@@ -1,4 +1,9 @@
+---
+name: attachment-risk-check
+description: Attachment risk rating from MDDR delivery statistics
+---
 # attachment-risk-check
+
 
 ## Purpose
 Assess attachment risk before opening, using MDDR 2026 cybercrime delivery statistics.

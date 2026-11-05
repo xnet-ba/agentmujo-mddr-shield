@@ -15,16 +15,31 @@ REQUIRED = ("agent", "identity", "tools")
 
 def lint(m):
     errs = []
+    if not isinstance(m, dict):
+        return ["manifest must be an object"]
     for f in REQUIRED:
         if f not in m:
             errs.append(f"missing: {f}")
-    if "tools" in m and (not isinstance(m["tools"], list) or not m["tools"]):
-        errs.append("tools must be a non-empty list")
+    for f in ("agent", "identity"):
+        if f in m and (not isinstance(m[f], str) or not m[f].strip()):
+            errs.append(f"{f} must be a non-empty string")
+    if "tools" in m and (not isinstance(m["tools"], list) or not m["tools"]
+                         or not all(isinstance(t, str) and t.strip() for t in m["tools"])):
+        errs.append("tools must be a non-empty list of strings")
     lim = m.get("limits", {})
-    if "max_shell_per_min" in lim and not isinstance(lim["max_shell_per_min"], int):
-        errs.append("limits.max_shell_per_min must be int")
-    if "allowed_hours" in lim and not re.match(r"^\d{2}-\d{2}$", lim["allowed_hours"]):
-        errs.append("limits.allowed_hours must be HH-HH")
+    if "limits" in m and not isinstance(lim, dict):
+        errs.append("limits must be an object")
+    elif isinstance(lim, dict):
+        mx = lim.get("max_shell_per_min")
+        if "max_shell_per_min" in lim and (isinstance(mx, bool) or not isinstance(mx, int) or mx <= 0):
+            errs.append("limits.max_shell_per_min must be a positive int")
+        ah = lim.get("allowed_hours")
+        if "allowed_hours" in lim:
+            import re as _re
+            mm = _re.match(r"^(\d{2})-(\d{2})$", ah) if isinstance(ah, str) else None
+            bad = not mm or not (0 <= int(mm.group(1)) <= 23 and 0 <= int(mm.group(2)) <= 23)
+            if bad:
+                errs.append("limits.allowed_hours must be HH-HH with 00-23")
     # S2 compatibility: baseline needs identity + tool list
     return errs
 

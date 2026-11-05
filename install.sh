@@ -39,14 +39,25 @@ echo "data -> $DATA"
 
 [ -f "$CONFIG" ] || { echo "nema $CONFIG — preskacem MCP"; exit 0; }
 [ -f "$CONFIG.bak-mddr-shield" ] || cp "$CONFIG" "$CONFIG.bak-mddr-shield"
-python3 - "$CONFIG" "$DATA" <<'EOF'
-import json, sys
+if ! python3 - "$CONFIG" "$DATA" <<'EOF'
+import json, os, sys, tempfile
 cfg, data = sys.argv[1], sys.argv[2]
-d = json.load(open(cfg))
+try:
+    d = json.load(open(cfg))
+except Exception as e:
+    print(f"NE MOGU procitati {cfg}: {e} (JSONC s komentarima nije podrzan)")
+    sys.exit(3)
 mcp = d.setdefault('mcp', {})
 mcp['threat-feed'] = {"type": "local",
     "command": ["python3", f"{data}/threat-feed-mcp/server.py"], "enabled": True}
-json.dump(d, open(cfg, 'w'), indent=2)
+fd, tmp = tempfile.mkstemp(dir=os.path.dirname(cfg) or ".")  # atomican zapis
+with os.fdopen(fd, "w") as f:
+    json.dump(d, f, indent=2)
+os.replace(tmp, cfg)
 print('mcp threat-feed upisan')
 EOF
+then
+  echo "Greska pri upisu MCP — nista nije mijenjano (backup: $CONFIG.bak-mddr-shield)"
+  exit 1
+fi
 echo "gotovo. vazi od sljedece sesije."

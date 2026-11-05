@@ -62,6 +62,16 @@ with tempfile.TemporaryDirectory() as t:
     r2 = subprocess.run([sys.executable, LINT, b], capture_output=True, text=True)
     check("b4 good passes", r1.returncode == 0 and "OK" in r1.stdout)
     check("b4 bad fails", r2.returncode != 0 and "identity" in r2.stdout + r2.stderr)
+    strict = [
+        ({"agent": "", "identity": "i", "tools": ["x"]}, 1),
+        ({"agent": "a", "identity": "i", "tools": ["x"], "limits": {"max_shell_per_min": -5}}, 1),
+        ({"agent": "a", "identity": "i", "tools": ["x"], "limits": {"allowed_hours": "99-99"}}, 1),
+        ({"agent": "a", "identity": "i", "tools": ["x"], "limits": None}, 1),
+    ]
+    import importlib.util as _ilu
+    _spec = _ilu.spec_from_file_location("ml", os.path.join(REPO, "tools", "agent-manifest", "manifest_lint.py"))
+    _ml = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(_ml)
+    check("b4 strict ranges", all(len(_ml.lint(m)) == n for m, n in strict))
 
 # --- C1: canary deploy + check + trip ---
 CAN = os.path.join(REPO, "tools", "canary-tripwire", "canary.py")
@@ -91,6 +101,35 @@ with tempfile.TemporaryDirectory() as t:
                        input=q, capture_output=True, text=True)
     got = json.loads(json.loads(r.stdout)["result"]["content"][0]["text"])["source"]
     check("t3 sources-format", got == ["A", "B"])
+
+# --- T3 hardening: malformed feed + bad inputs never crash ---
+with tempfile.TemporaryDirectory() as t:
+    fp = os.path.join(t, "feed.json")
+    json.dump({"indicators": [{"type": "cve"}, {"value": "x"}, "junk",
+                              {"type": "cve", "value": "CVE-9", "page": 1}]},
+              open(fp, "w"))
+    srv = os.path.join(REPO, "servers", "threat-feed-mcp", "server.py")
+    lines = [
+        '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"threat_lookup","arguments":{"query":5}}}',
+        '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"nope","arguments":{}}}',
+        '{"jsonrpc":"2.0","id":3,"method":"ping","params":{}}',
+        '{"jsonrpc":"2.0","method":"notifications/initialized","params":{}}',
+        'not json',
+        '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"threat_stats","arguments":{}}}',
+        '[1,2,3]',
+    ]
+    r = subprocess.run([sys.executable, srv, fp], input="\n".join(lines),
+                       capture_output=True, text=True)
+    check("t3 survives garbage", r.returncode == 0)
+    outs = [json.loads(x) for x in r.stdout.splitlines()]
+    byid = {o.get("id"): o for o in outs}
+    check("t3 invalid params code", byid[1]["error"]["code"] == -32602)
+    check("t3 unknown tool code", byid[2]["error"]["code"] == -32601)
+    check("t3 ping ok", byid[3].get("result") == {})
+    nulls = [o for o in outs if o.get("id") is None]
+    check("t3 notification silent", all("error" in o for o in nulls) and len(nulls) == 2)
+    check("t3 malformed feed skipped", json.loads(byid[4]["result"]["content"][0]["text"])["total"] == 1)
+    check("t3 non-object request", any(o.get("error", {}).get("code") == -32700 for o in outs))
 
 # --- shield-audit: end-to-end runner (localhost tls fails gracefully) ---
 with tempfile.TemporaryDirectory() as t:

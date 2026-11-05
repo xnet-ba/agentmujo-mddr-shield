@@ -6,13 +6,12 @@ Izlaz: JSON {host, ts, listeners: [{addr, port, exposure}], docker: [...]}.
 Exposure: localhost | private | public.
 """
 import json
+import ipaddress
 import re
 import socket
 import subprocess
 import sys
 from datetime import datetime, timezone
-
-PRIV = re.compile(r"^(127\.|10\.|172\.(1[6-9]|2\d|3[01])\.|192\.168\.|100\.|::1$|fe80|fd[0-9a-f]{2})")
 
 
 def run(cmd):
@@ -20,6 +19,23 @@ def run(cmd):
         return subprocess.run(cmd, capture_output=True, text=True, timeout=15).stdout
     except Exception:
         return ""
+
+
+def classify(addr):
+    """localhost / private / public via ipaddress; unknown on garbage.
+    Wildcards (0.0.0.0, ::, *) count as public: they accept the world."""
+    if addr in ("*", "0.0.0.0", "::"):
+        return "public"
+    try:
+        ip = ipaddress.ip_address(addr)
+    except ValueError:
+        return "unknown"
+    if ip.is_loopback:
+        return "localhost"
+    if not ip.is_global:
+        # RFC1918, ULA fc00::/7, CGNAT 100.64/10, link-local, reserved
+        return "private"
+    return "public"
 
 
 def parse_ss(text):
@@ -31,27 +47,31 @@ def parse_ss(text):
         local = parts[3]
         addr, _, port = local.rpartition(":")
         addr = addr.strip("[]").split("%")[0]  # strip [ ] + %iface zone
-        try:
-            if addr in ("127.0.0.1", "::1"):
-                exposure = "localhost"
-            elif addr in ("0.0.0.0", "::", "*") or not PRIV.match(addr):
-                exposure = "public"
-            else:
-                exposure = "private"
-        except Exception:
-            exposure = "unknown"
-        out.append({"addr": addr, "port": port, "exposure": exposure})
+        out.append({"addr": addr, "port": port, "exposure": classify(addr)})
     return out
 
 
 def parse_docker(text):
     out = []
     for ln in text.splitlines():
-        m = re.findall(r"(\d+\.\d+\.\d+\.\d+):(\d+)->", ln)
-        for addr, port in m:
-            out.append({"addr": addr, "port": port,
-                        "exposure": "localhost" if PRIV.match(addr) else "public"})
+        # 0.0.0.0:8000->80, [::]:8080->80, 0.0.0.0:8000-8010->8000-8010
+        for m in re.finditer(r"(\[?[0-9a-fA-F:.]+\]?):(\d+(?:-\d+)?)->", ln):
+            addr = m.group(1).strip("[]")
+            for port in expand_range(m.group(2)):
+                out.append({"addr": addr, "port": port, "exposure": classify(addr)})
     return out
+
+
+def expand_range(pr):
+    if "-" in pr:
+        a, b = pr.split("-", 1)
+        try:
+            lo, hi = int(a), int(b)
+            if 0 < lo <= hi <= 65535 and hi - lo <= 1000:
+                return [str(p) for p in range(lo, hi + 1)]
+        except ValueError:
+            pass
+    return [pr]
 
 
 def snapshot(ss_text=None, docker_text=None):

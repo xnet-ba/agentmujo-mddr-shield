@@ -19,16 +19,23 @@ for s in mddr-threat-checklist agent-baseline-monitor clickfix-phishing-drill ai
 done
 if [ -f "$CONFIG" ]; then
   python3 - "$CONFIG" <<'EOF'
-import json, sys
+import json, os, sys, tempfile
 cfg = sys.argv[1]
-d = json.load(open(cfg))
+try:
+    d = json.load(open(cfg))
+except Exception as e:
+    print(f"NE MOGU procitati {cfg}: {e}")
+    sys.exit(3)
 if 'threat-feed' in d.get('mcp', {}):
     del d['mcp']['threat-feed']
-    json.dump(d, open(cfg, 'w'), indent=2)
+    fd, tmp = tempfile.mkstemp(dir=os.path.dirname(cfg) or ".")
+    with os.fdopen(fd, "w") as f:
+        json.dump(d, f, indent=2)
+    os.replace(tmp, cfg)
     print('mcp threat-feed uklonjen')
 else:
     print('mcp vec cist')
 EOF
 fi
-[ -d "$DATA" ] && rm -rf "$DATA" && echo "uklonjen $DATA"
+[ -d "$DATA" ] && rm -rf "$DATA/threat-feed-mcp" "$DATA/tools" && rmdir "$DATA" 2>/dev/null && echo "uklonjen $DATA" || echo "$DATA sacuvan (korisnicki podaci: audit.jsonl, *-state.json, snimci)"
 echo "gotovo. backup: $CONFIG.bak-mddr-shield"

@@ -2,6 +2,14 @@
 """ioc_extract.py — extract threat indicators from a report text file to JSON.
 
 Usage: ioc_extract.py INPUT.txt [-o iocs.json]
+INPUT.txt is plain text: if it contains "===== PAGE N =====" markers (one per
+page, as produced by naive PDF text extraction), each indicator gets its page;
+without markers everything gets page 0. PDF->TXT conversion itself is outside
+this tool (e.g. pypdf, pdftotext) — document which converter you used.
+Scope (honest): TECH/FAMILY lists are hand-built from ONE report (MDDR 2026),
+keyword/regex based — they find candidate mentions, not verified IoCs
+(no IPs, domains, or hashes). Scales ("47%") dedupe by value and lose context.
+Run build_feed.py to merge several reports into one feed.
 Extracts: CVE IDs, MITRE-like technique names, known threat/malware family
 mentions, and money/scale figures with page context. Stdlib only.
 """

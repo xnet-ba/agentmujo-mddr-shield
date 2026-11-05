@@ -1,4 +1,9 @@
+---
+name: clickfix-phishing-drill
+description: Safe social-engineering drill scenarios and scoring
+---
 # clickfix-phishing-drill
+
 
 ## Purpose
 Generate safe, measurable social-engineering drill scenarios (ClickFix dialogs, QR-phishing mail) to train staff and test detection (MDDR 2026 takeaway 3: people remain the most exploited initial-access path).

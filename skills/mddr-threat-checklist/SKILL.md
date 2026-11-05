@@ -1,4 +1,9 @@
+---
+name: mddr-threat-checklist
+description: Turn the 10 MDDR 2026 priorities into a verifiable checklist
+---
 # mddr-threat-checklist
+
 
 ## Purpose
 Turn the 10 Microsoft Digital Defense Report 2026 priorities (p. 7) into a verifiable checklist for a concrete environment (Test Lab, Test Lab, or any small infra).

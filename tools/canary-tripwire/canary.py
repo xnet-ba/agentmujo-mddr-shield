@@ -22,6 +22,9 @@ def sha(p):
 
 def deploy(d, state):
     os.makedirs(d, exist_ok=True)
+    sdir = os.path.dirname(os.path.abspath(state))
+    if sdir:
+        os.makedirs(sdir, exist_ok=True)
     st = {"deployed_at": time.strftime("%Y-%m-%dT%H:%M:%S"), "canaries": []}
     if os.path.exists(state):
         try:
@@ -30,12 +33,20 @@ def deploy(d, state):
             pass
     for n in CANARY_NAMES:
         p = os.path.join(d, n)
-        if not os.path.exists(p):
+        if os.path.exists(p):
+            try:
+                existing = open(p).read()
+            except Exception:
+                existing = ""
+            if "tripwire" not in existing.lower():
+                print(f"REFUSE: {p} exists and is not a canary — will not overwrite")
+                continue
+        else:
             open(p, "w").write(CANARY_TEXT)
         st["canaries"] = [c for c in st["canaries"] if c["path"] != p]
         st["canaries"].append({"path": p, "sha256": sha(p)})
     json.dump(st, open(state, "w"), indent=2)
-    print(f"deployed {len(CANARY_NAMES)} canaries in {d}")
+    print(f"deployed {len(st['canaries'])} canaries in {d}")
 
 
 def check(state):

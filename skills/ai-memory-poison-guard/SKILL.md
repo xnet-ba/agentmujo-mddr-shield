@@ -1,4 +1,9 @@
+---
+name: ai-memory-poison-guard
+description: Validate long-term memory/RAG writes against poisoning and XPIA
+---
 # ai-memory-poison-guard
+
 
 ## Purpose
 Validate writes to long-term agent memory and RAG stores against memory-poisoning and cross-prompt injection (XPIA) attacks (MDDR 2026, p. 25): poisoned content persists across sessions and returns as "trusted context".

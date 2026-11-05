@@ -16,6 +16,10 @@ Polja: `ts` (ISO-8601), `agent` (ko), `tool` (koji alat), `action` (skraćeno, b
 
 `alog.sh` — append-only upis: `alog.sh AGENT TOOL "ACTION" [RESULT]` (detalj u fajlu).
 Log: `~/.local/share/mddr-shield/audit.jsonl` (default, može preko `AGENT_AUDIT_LOG`).
+Escape/redakcija: JSON escape preko python3 (obavezan po install --check),
+uklanja kontrolne znakove/newline, redigira `Bearer`/lozinke/API-ključeve,
+krati na 2000 znakova; fajl se kreira s 0600. Redakcija je zadnja linija —
+tajne se ne upisuju namjerno.
 Rotacija: mjesečna, `audit-YYYY-MM.jsonl`; bez novih servisa — ručno ili postojeći cron.
 
 ## Baseline pravila (v1, pragovi se kalibriraju nakon 2 sedmice logova)

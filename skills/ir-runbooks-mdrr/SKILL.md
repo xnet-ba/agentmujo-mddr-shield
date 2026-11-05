@@ -1,4 +1,9 @@
+---
+name: ir-runbooks-mdrr
+description: First-hour runbooks: token abuse, ClickFix trace, ransomware
+---
 # ir-runbooks-mdrr
+
 
 ## Purpose
 Three MDDR-grounded incident runbooks for a small infra (small-infra scale). Complements the general `incident-response` skill with concrete first-hour steps.

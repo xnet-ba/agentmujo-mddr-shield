@@ -1,4 +1,9 @@
+---
+name: agent-baseline-monitor
+description: Per-agent behavior baseline and anomaly detection
+---
 # agent-baseline-monitor
+
 
 ## Purpose
 Detect anomalous AI-agent behavior by comparing live tool-use against a per-agent baseline (MDDR 2026, p. 17: normal = which identity, which tools, at what frequency — deviation becomes visible).

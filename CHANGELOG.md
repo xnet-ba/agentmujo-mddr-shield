@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.10.0 — 2026-11-05
+- Audit-fixes (vanjski nalaz): fail-open -> ok/error/unknown + exit!=0 (COR-001); alog.sh JSON escape+redakcija+0600 (SEC-001); anonimizacija tragova infrastrukture (SEC-004); installer JSONC/atomski upis/cuvanje korisnickih podataka (SEC-003); cve-match pokrivenost+multiarch+arg-parsiranje (COR-002); frontmatter na skillovima (DOC-001); canary read-scope+refuse-overwrite (SEC-002); ipaddress klasifikacija+docker opsezi (COR-003); MCP validacija+ping+feed-skip (COR-004); README popravke (DOC-002); strozi manifest lint (COR-006); SECURITY.md + CI (ARH-001).
+
 ## 1.9.0 — 2026-11-05
 - Novo: T11 `cve-match` — sbom.json protiv OSV.dev (PyPI/Debian, bez ključa, offline exit 2).
 - TVM petlja zatvorena: inventar → ranjivosti.
@@ -31,12 +34,12 @@
 ## 1.4.1 — 2026-11-05
 - Fix: `--json-out` vrijednost se više ne skenira kao host; HSTS `error:...` vs `None` ostaju razdvojeni.
 - Puni krug na TestLab (više domena): 21× TLSv1.3/RSA/LE, 0 isteklih <30d; dio domena bez HSTS (sistemski nalaz);
-  `server.example-lab.local:443` odbijen (samo 8083, očekivano).
+  `panel-host:443` odbijen (samo admin-port, očekivano).
 
 ## 1.4.0 — 2026-11-05
 - Novo: B2 `tls-inventory`, B4 `agent-manifest` (linter + primjer), B5 `attachment-risk-check`, B6 `ir-runbooks-mdrr`, C1 `canary-tripwire` (alat + skill).
 - `tests/test_wave2.py` (7 asserta: tls-regex, lint OK/bad, canary deploy/check/trip).
-- Uživo: LE certovi uredni (~50 dana), TLSv1.3; `baza.example-lab.local` bez HSTS (nalaz).
+- Uživo: LE certovi uredni, TLSv1.3; API domena bez HSTS (nalaz).
 - installer pokriva svih 7 skillova; dogfood na TestLab.
 
 ## 1.3.0 — 2026-11-05

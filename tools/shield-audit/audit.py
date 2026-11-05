@@ -55,6 +55,14 @@ def main():
     r = run(os.path.join(TOOLS, "shield-status", "status.py"),
             "--asset", snap, "--tls", tlsf)
     print(r.stdout)
+    if r.returncode != 0:
+        print("shield-status reported input problems (see above)")
+    try:
+        for f in (snap, tlsf, sbomf):
+            json.load(open(f))
+    except Exception as e:
+        print(f"collection output invalid: {e}")
+        sys.exit(1)
     report = {"ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
               "hosts": hosts,
               "files": {"asset": snap, "tls": tlsf, "sbom": sbomf},

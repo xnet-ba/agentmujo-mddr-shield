@@ -25,10 +25,19 @@ d = json.loads(r.stdout)
 by_port = {x["port"]: x for x in d["listeners"]}
 check("8000 public", by_port.get("8000", {}).get("exposure") == "public")
 check("9100 localhost", by_port.get("9100", {}).get("exposure") == "localhost")
-check("53 private(tailscale)", by_port.get("53", {}).get("exposure") == "private")
+check("53 private(vpn)", by_port.get("53", {}).get("exposure") == "private")
 check("8083 ipv6 public", by_port.get("8083", {}).get("exposure") == "public")
 priv53 = [x for x in d["listeners"] if x["port"] == "53"]
 check("53 sve private", len(priv53) == 3 and all(x["exposure"] == "private" for x in priv53))
+
+# --- COR-003: edge klasifikacija ---
+import sys as _s
+_s.path.insert(0, os.path.join(REPO, "tools", "asset-inventory"))
+from inventory import classify
+_edge = {"127.0.0.53": "localhost", "::ffff:127.0.0.1": "private",
+         "100.64.5.5": "private", "100.10.0.1": "public",
+         "fc00::1": "private", "junk": "unknown"}
+check("edge klasifikacija", all(classify(k) == v for k, v in _edge.items()))
 
 snap = os.path.join(BASE, "snap-test.json")
 subprocess.run([sys.executable, INV, "--ss-file", FIX, "--snap", snap],
