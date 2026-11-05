@@ -30,6 +30,24 @@ m = re.search(r"^\s*Protocol\s*:\s*(\S+)", fake_verbose, re.M)
 check("b2 tls regex", m and m.group(1) == "TLSv1.3")
 check("b2 pem slice", "BEGIN CERTIFICATE" in fake_verbose)
 
+# --- feed builder: merge + dedup ---
+BUILD = os.path.join(REPO, "tools", "ioc-extract", "build_feed.py")
+with tempfile.TemporaryDirectory() as t:
+    f1, f2 = os.path.join(t, "a.json"), os.path.join(t, "b.json")
+    json.dump({"source": "A", "indicators": [
+        {"type": "cve", "value": "CVE-2020-1472", "page": 1},
+        {"type": "family", "value": "Qilin", "page": 2}]}, open(f1, "w"))
+    json.dump({"source": "B", "indicators": [
+        {"type": "family", "value": "qilin", "page": 9},
+        {"type": "technique", "value": "ClickFix", "page": 3}]}, open(f2, "w"))
+    out = os.path.join(t, "feed.json")
+    r = subprocess.run([sys.executable, BUILD, f1, f2, "-o", out],
+                       capture_output=True, text=True)
+    check("feed build runs", r.returncode == 0)
+    d = json.load(open(out))
+    check("feed dedup (3, not 4)", d["count"] == 3)
+    check("feed keeps both sources", d["sources"] == ["A", "B"])
+
 # --- B4: manifest linter on fixtures ---
 LINT = os.path.join(REPO, "tools", "agent-manifest", "manifest_lint.py")
 good = {"agent": "deploy", "identity": "svc-deploy",

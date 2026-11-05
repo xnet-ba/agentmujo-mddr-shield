@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.0 — 2026-11-05
+- Novo: `build_feed.py` — spajanje više iocs.json u jedan feed (dedup, više izvora).
+- T1→T3 pipeline zatvoren: extract → build_feed → MCP server.
+
 ## 1.4.1 — 2026-11-05
 - Fix: `--json-out` vrijednost se više ne skenira kao host; HSTS `error:...` vs `None` ostaju razdvojeni.
 - Puni krug na TestLab (više domena): 21× TLSv1.3/RSA/LE, 0 isteklih <30d; dio domena bez HSTS (sistemski nalaz);

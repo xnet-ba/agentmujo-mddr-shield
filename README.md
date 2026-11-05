@@ -124,6 +124,8 @@ agentmujo-mddr-shield/
 ```bash
 python3 tools/ioc-extract/ioc_extract.py MDDR2026.txt -o iocs.json
 # → 118 indikatora: 9 CVE + 21 tehnika + 9 familija + 79 skala-figura
+python3 tools/ioc-extract/build_feed.py r1.iocs.json r2.iocs.json -o servers/threat-feed-mcp/threat_feed.json
+# → spojen, dedupliciran feed iz više izvora (prvi viđeni zapis pobjeđuje)
 ```
 
 - Bez zavisnosti (stdlib). Testirano na punom MDDR tekstu: tačno pronalazi
