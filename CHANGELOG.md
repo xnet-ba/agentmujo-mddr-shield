@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0 — 2026-11-05
+- Novo: B2 `tls-inventory`, B4 `agent-manifest` (linter + primjer), B5 `attachment-risk-check`, B6 `ir-runbooks-mdrr`, C1 `canary-tripwire` (alat + skill).
+- `tests/test_wave2.py` (7 asserta: tls-regex, lint OK/bad, canary deploy/check/trip).
+- Uživo: LE certovi uredni (~50 dana), TLSv1.3; `baza.example-lab.local` bez HSTS (nalaz).
+- installer pokriva svih 7 skillova; dogfood na TestLab.
+
 ## 1.3.0 — 2026-11-05
 - Novo: T4 `asset-inventory` (ss+docker snapshot, exposure-klasifikacija, diff) + `tests/test_asset.py` (7 asserta).
 - Uživo verificirano: `:8000` zatvoren, javni listeneri popisani.

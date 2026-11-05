@@ -8,7 +8,7 @@ SKILLS_DIR="$HOME_DIR/.config/opencode/skills"
 CONFIG="$HOME_DIR/.config/opencode/opencode.json"
 DATA="$HOME_DIR/.local/share/mddr-shield"
 
-for s in mddr-threat-checklist agent-baseline-monitor clickfix-phishing-drill ai-memory-poison-guard; do
+for s in mddr-threat-checklist agent-baseline-monitor clickfix-phishing-drill ai-memory-poison-guard attachment-risk-check ir-runbooks-mdrr canary-tripwire; do
   if [ -d "$SKILLS_DIR/$s" ]; then
     if diff -q "$REPO/skills/$s/SKILL.md" "$SKILLS_DIR/$s/SKILL.md" >/dev/null 2>&1; then
       rm -rf "$SKILLS_DIR/$s" && echo "uklonjen skill $s"

@@ -131,7 +131,6 @@ python3 tools/ioc-extract/ioc_extract.py MDDR2026.txt -o iocs.json
 - Ponovno upotrebljivo za **svaki budući izvještaj**.
 
 ### T4 · ✅ `asset-inventory` — sljedeći `:8000` se ne čeka, nego se lovi
-
 ```bash
 python3 tools/asset-inventory/inventory.py --snap snap.json
 python3 tools/asset-inventory/inventory.py --diff snap.json
@@ -139,6 +138,33 @@ python3 tools/asset-inventory/inventory.py --diff snap.json
 ```
 
 Read-only, stdlib, Linux: `ss` + `docker` → klasifikacija `localhost/private/public` + diff protiv prošlog stanja. Testirano (7 asserta) i verificirano uživo — `:8000` potvrđeno zatvoren.
+
+### T5 · ✅ `tls-inventory` — certovi i TLS na svim domenama
+
+```bash
+python3 tools/tls-inventory/tls_inventory.py example-lab.local baza.example-lab.local
+# → TLS verzija, subject/issuer, dani do isteka, tip ključa, HSTS
+```
+
+Read-only (openssl + stdlib). Uživo: LE certovi uredni (~50 dana), ali `baza.example-lab.local` **nema HSTS** — zabilježeno kao nalaz.
+
+### T6 · ✅ `agent-manifest` — red za svakog agenta
+
+```bash
+python3 tools/agent-manifest/manifest_lint.py tools/agent-manifest/example.json
+# → OK: deploy (identity=svc-deploy, tools=3)
+```
+
+JSON manifest (nula zavisnosti — zato JSON, ne YAML) kompatibilan sa S2 baselineom.
+
+### T7 · ✅ `canary-tripwire` — mamac koji otkriva uljeza
+
+```bash
+python3 tools/canary-tripwire/canary.py deploy /srv/backup --state ~/.local/share/mddr-shield/canary-state.json
+python3 tools/canary-tripwire/canary.py check   # OK ili TRIP + lista
+```
+
+Inertni mamci (bez pravih kredencijala), dnevna provjera, na TRIP se ide po B6 runbooku.
 
 ### T2 · ✅ `agent-audit-log` — jedan red po pozivu alata
 ```bash
@@ -195,6 +221,14 @@ python3 tools/ioc-extract/ioc_extract.py izvestaj.txt -o iocs.json
 echo '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
   | python3 servers/threat-feed-mcp/server.py
 ```
+
+### S5 · ✅ `attachment-risk-check` · S6 · ✅ `ir-runbooks-mdrr` · S7 · ✅ `canary-tripwire`
+
+| Skill | Ukratko |
+|:--|:--|
+| `attachment-risk-check` | Rizik po tipu fajla iz MDDR statistike (SVG 47%, DOC 17%) + procedura prije otvaranja |
+| `ir-runbooks-mdrr` | 3 runbooka prvog sata: token-abuse, ClickFix trag, ransomware sumnja |
+| `canary-tripwire` | Strategija mamaca + cadence provjere + trip-procedura (uz T7 alat) |
 
 <div align="center">
 

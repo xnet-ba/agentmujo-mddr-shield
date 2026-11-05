@@ -11,7 +11,7 @@ CONFIG="$HOME_DIR/.config/opencode/opencode.json"
 DATA="$HOME_DIR/.local/share/mddr-shield"
 
 mkdir -p "$SKILLS_DIR" "$DATA"
-for s in mddr-threat-checklist agent-baseline-monitor clickfix-phishing-drill ai-memory-poison-guard; do
+for s in mddr-threat-checklist agent-baseline-monitor clickfix-phishing-drill ai-memory-poison-guard attachment-risk-check ir-runbooks-mdrr canary-tripwire; do
   if [ -d "$SKILLS_DIR/$s" ] && diff -q "$REPO/skills/$s/SKILL.md" "$SKILLS_DIR/$s/SKILL.md" >/dev/null; then
     echo "skip skills/$s (isti)"
   else

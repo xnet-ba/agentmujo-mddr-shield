@@ -1,20 +1,27 @@
 {
   "name": "agentmujo-mddr-shield",
   "display_name": "AgentMujo MDDR Shield",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "platform": "opencode",
   "type": "skill-tool-pack",
   "source_report": "Microsoft Digital Defense Report 2026 v1.1 (July 2025 - June 2026)",
-  "skills_count": 4,
+  "skills_count": 7,
   "skills": [
     {"name": "mddr-threat-checklist", "description": "Turn the 10 MDDR 2026 priorities into a verifiable checklist"},
     {"name": "agent-baseline-monitor", "description": "Per-agent behavior baseline and anomaly detection"},
     {"name": "clickfix-phishing-drill", "description": "Safe social-engineering drill scenarios and scoring"},
-    {"name": "ai-memory-poison-guard", "description": "Validate long-term memory/RAG writes against poisoning and XPIA"}
+    {"name": "ai-memory-poison-guard", "description": "Validate long-term memory/RAG writes against poisoning and XPIA"},
+    {"name": "attachment-risk-check", "description": "Attachment risk rating from MDDR delivery statistics"},
+    {"name": "ir-runbooks-mdrr", "description": "First-hour runbooks: token abuse, ClickFix trace, ransomware"},
+    {"name": "canary-tripwire", "description": "Tripwire canary strategy and check cadence"}
   ],
   "tools": [
     {"name": "ioc-extract", "description": "Extract threat indicators (CVE, techniques, families) from report text to JSON"},
-    {"name": "agent-audit-log", "description": "Append-only JSONL agent audit log format, logger, and baseline rules"}
+    {"name": "agent-audit-log", "description": "Append-only JSONL agent audit log format, logger, and baseline rules"},
+    {"name": "asset-inventory", "description": "Listening-socket snapshot with exposure classification and diff"},
+    {"name": "tls-inventory", "description": "TLS/cert/HSTS inventory across domains (read-only)"},
+    {"name": "agent-manifest", "description": "Agent manifest linter, S2-baseline compatible"},
+    {"name": "canary-tripwire", "description": "Deploy and verify tripwire canaries"}
   ],
   "servers": [
     {"name": "threat-feed-mcp", "description": "Read-only MCP server over the local threat-indicator feed (stdio)"}
