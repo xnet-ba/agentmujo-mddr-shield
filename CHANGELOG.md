@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.0 — 2026-11-05
+- Novo: T8 `shield-status` — kompozitor postojećih izlaza u jednu stranicu (bez nove logike prikupljanja).
+
 ## 1.5.1 — 2026-11-05
 - Fix: server podrzava i `sources` (novi feed-format) i `source` (stari seed).
 - C1 dogfood na TestLab test-diru: deploy → OK → TRIP → ciscenje.

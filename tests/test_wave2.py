@@ -92,5 +92,21 @@ with tempfile.TemporaryDirectory() as t:
     got = json.loads(json.loads(r.stdout)["result"]["content"][0]["text"])["source"]
     check("t3 sources-format", got == ["A", "B"])
 
+# --- shield-status: composer over canned outputs ---
+ST = os.path.join(REPO, "tools", "shield-status", "status.py")
+with tempfile.TemporaryDirectory() as t:
+    a = os.path.join(t, "a.json")
+    tl = os.path.join(t, "t.json")
+    json.dump({"listeners": [
+        {"addr": "0.0.0.0", "port": "22", "exposure": "public"},
+        {"addr": "127.0.0.1", "port": "9", "exposure": "localhost"}]}, open(a, "w"))
+    json.dump([{"host": "x", "days_left": 5, "hsts": None}], open(tl, "w"))
+    r = subprocess.run([sys.executable, ST, "--asset", a, "--tls", tl],
+                       capture_output=True, text=True)
+    check("status runs", r.returncode == 0)
+    check("status counts", "public listeners: 1" in r.stdout and "x" in r.stdout)
+    r = subprocess.run([sys.executable, ST], capture_output=True, text=True)
+    check("status needs args", r.returncode == 2)
+
 print("FAILURES:", failures if failures else "none")
 sys.exit(1 if failures else 0)

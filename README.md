@@ -168,6 +168,17 @@ python3 tools/canary-tripwire/canary.py check   # OK ili TRIP + lista
 
 Inertni mamci (bez pravih kredencijala), dnevna provjera, na TRIP se ide po B6 runbooku.
 
+### T8 · ✅ `shield-status` — jedan pogled na sistem
+
+```bash
+python3 tools/asset-inventory/inventory.py --snap snap.json
+python3 tools/tls-inventory/tls_inventory.py $(cat domains.txt) --json-out tls.json
+python3 tools/shield-status/status.py --asset snap.json --tls tls.json
+# → public listeners: 12 / certs expiring <30d: 0 / hosts without HSTS: 16 ...
+```
+
+Ne prikuplja ništa novo — samo sažima postojeće izlaze (T4+T5, opcionalno manifest i feed).
+
 ### T2 · ✅ `agent-audit-log` — jedan red po pozivu alata
 ```bash
 tools/agent-audit-log/alog.sh deploy shell "systemctl status app" ok
