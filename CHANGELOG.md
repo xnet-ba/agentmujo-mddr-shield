@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.1 — 2026-11-05
+- Fix: `--json-out` vrijednost se više ne skenira kao host; HSTS `error:...` vs `None` ostaju razdvojeni.
+- Puni krug na TestLab (više domena): 21× TLSv1.3/RSA/LE, 0 isteklih <30d; dio domena bez HSTS (sistemski nalaz);
+  `server.example-lab.local:443` odbijen (samo 8083, očekivano).
+
 ## 1.4.0 — 2026-11-05
 - Novo: B2 `tls-inventory`, B4 `agent-manifest` (linter + primjer), B5 `attachment-risk-check`, B6 `ir-runbooks-mdrr`, C1 `canary-tripwire` (alat + skill).
 - `tests/test_wave2.py` (7 asserta: tls-regex, lint OK/bad, canary deploy/check/trip).

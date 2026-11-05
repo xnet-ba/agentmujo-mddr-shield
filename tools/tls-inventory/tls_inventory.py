@@ -59,8 +59,17 @@ def check_host(host):
 
 
 def main():
-    a = [x for x in sys.argv[1:] if not x.startswith("--")]
-    out_file = None
+    a, out_file, skip = [], None, False
+    for x in sys.argv[1:]:
+        if skip:
+            skip = False
+            continue
+        if x == "--json-out":
+            skip = True
+            continue
+        if x.startswith("--"):
+            continue
+        a.append(x)
     if "--json-out" in sys.argv:
         out_file = sys.argv[sys.argv.index("--json-out") + 1]
     if not a:
