@@ -1,0 +1,201 @@
+{
+  "source": "MDDR 2026",
+  "count": 39,
+  "indicators": [
+    {
+      "type": "technique",
+      "value": "Ransomware",
+      "page": 2
+    },
+    {
+      "type": "technique",
+      "value": "credential theft",
+      "page": 5
+    },
+    {
+      "type": "technique",
+      "value": "ClickFix",
+      "page": 8
+    },
+    {
+      "type": "technique",
+      "value": "supply chain compromise",
+      "page": 8
+    },
+    {
+      "type": "technique",
+      "value": "Memory poisoning",
+      "page": 9
+    },
+    {
+      "type": "technique",
+      "value": "Reconnaissance",
+      "page": 10
+    },
+    {
+      "type": "technique",
+      "value": "cross-prompt injection",
+      "page": 11
+    },
+    {
+      "type": "technique",
+      "value": "XPIA",
+      "page": 11
+    },
+    {
+      "type": "technique",
+      "value": "data exfiltration",
+      "page": 12
+    },
+    {
+      "type": "technique",
+      "value": "spear phishing",
+      "page": 13
+    },
+    {
+      "type": "technique",
+      "value": "prompt injection",
+      "page": 15
+    },
+    {
+      "type": "family",
+      "value": "Pesky Pika",
+      "page": 15
+    },
+    {
+      "type": "family",
+      "value": "TikTok ClickFix",
+      "page": 15
+    },
+    {
+      "type": "technique",
+      "value": "token abuse",
+      "page": 17
+    },
+    {
+      "type": "technique",
+      "value": "goal hijacking",
+      "page": 22
+    },
+    {
+      "type": "technique",
+      "value": "Malicious link injection",
+      "page": 23
+    },
+    {
+      "type": "technique",
+      "value": "Jailbreak",
+      "page": 23
+    },
+    {
+      "type": "technique",
+      "value": "password spray",
+      "page": 33
+    },
+    {
+      "type": "technique",
+      "value": "Valid accounts",
+      "page": 33
+    },
+    {
+      "type": "technique",
+      "value": "External remote services",
+      "page": 33
+    },
+    {
+      "type": "technique",
+      "value": "Drive-by compromise",
+      "page": 33
+    },
+    {
+      "type": "technique",
+      "value": "Trusted relationship",
+      "page": 33
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2020-1472",
+      "page": 34
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2022-22954",
+      "page": 34
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2021-40444",
+      "page": 34
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2023-28231",
+      "page": 34
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2020-0601",
+      "page": 34
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2024-40766",
+      "page": 48
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2026-20131",
+      "page": 48
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2025-49704",
+      "page": 48
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2025-49706",
+      "page": 48
+    },
+    {
+      "type": "family",
+      "value": "Akira",
+      "page": 48
+    },
+    {
+      "type": "family",
+      "value": "Tycoon2FA",
+      "page": 62
+    },
+    {
+      "type": "family",
+      "value": "Qilin",
+      "page": 75
+    },
+    {
+      "type": "family",
+      "value": "PlayCrypt",
+      "page": 75
+    },
+    {
+      "type": "family",
+      "value": "Gentlemen",
+      "page": 75
+    },
+    {
+      "type": "family",
+      "value": "INC Ransom",
+      "page": 75
+    },
+    {
+      "type": "family",
+      "value": "Sinobi",
+      "page": 76
+    },
+    {
+      "type": "technique",
+      "value": "DDoS",
+      "page": 90
+    }
+  ]
+}
