@@ -168,6 +168,16 @@ python3 tools/canary-tripwire/canary.py check   # OK ili TRIP + lista
 
 Inertni mamci (bez pravih kredencijala), dnevna provjera, na TRIP se ide po B6 runbooku.
 
+### T11 · ✅ `cve-match` — inventar protiv ranjivosti (zatvara TVM petlju)
+
+```bash
+python3 tools/sbom-inventory/sbom.py --snap sbom.json
+python3 tools/cve-match/match.py sbom.json -o vulns.json
+# → queried N packages, M vuln hits (OSV.dev, bez ključa; offline → jasan exit 2)
+```
+
+pip→PyPI, dpkg→Debian ekosistemi. Debian revizije mogu prebaciti — dokumentirano.
+
 ### T10 · ✅ `shield-audit` — jedna komanda, cijela provjera (B-ocjena: runner postoji)
 
 ```bash

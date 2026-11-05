@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.0 — 2026-11-05
+- Novo: T11 `cve-match` — sbom.json protiv OSV.dev (PyPI/Debian, bez ključa, offline exit 2).
+- TVM petlja zatvorena: inventar → ranjivosti.
+
 ## 1.8.0 — 2026-11-05
 - Novo: T10 `shield-audit` — jedna komanda pokreće T4+T5+T9+T8 i izdaje report.json.
 - Fix: `%zone` sufiks više ne jede port (T4).
