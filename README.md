@@ -130,8 +130,17 @@ python3 tools/ioc-extract/ioc_extract.py MDDR2026.txt -o iocs.json
   `CVE-2020-1472`, `Qilin`, `Tycoon2FA`, `Pesky Pika` — svaki s brojem stranice.
 - Ponovno upotrebljivo za **svaki budući izvještaj**.
 
-### T2 · ✅ `agent-audit-log` — jedan red po pozivu alata
+### T4 · ✅ `asset-inventory` — sljedeći `:8000` se ne čeka, nego se lovi
 
+```bash
+python3 tools/asset-inventory/inventory.py --snap snap.json
+python3 tools/asset-inventory/inventory.py --diff snap.json
+# → {"added": [...], "removed": [...]}
+```
+
+Read-only, stdlib, Linux: `ss` + `docker` → klasifikacija `localhost/private/public` + diff protiv prošlog stanja. Testirano (7 asserta) i verificirano uživo — `:8000` potvrđeno zatvoren.
+
+### T2 · ✅ `agent-audit-log` — jedan red po pozivu alata
 ```bash
 tools/agent-audit-log/alog.sh deploy shell "systemctl status app" ok
 # → {"ts":"...","agent":"deploy","tool":"shell","action":"...","result":"ok"}

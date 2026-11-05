@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0 — 2026-11-05
+- Novo: T4 `asset-inventory` (ss+docker snapshot, exposure-klasifikacija, diff) + `tests/test_asset.py` (7 asserta).
+- Uživo verificirano: `:8000` zatvoren, javni listeneri popisani.
+
 ## 1.2.0 — 2026-11-05
 - Prenosivost: `install.sh` / `uninstall.sh` (idempotentno, backup `opencode.json.bak-mddr-shield`, rucne izmjene skillova se cuvaju); sve staze iz `$HOME`, jedina zavisnost `python3`.
 - `tests/test_install.sh`: round-trip instalacije u temp HOME (5 asserta).
