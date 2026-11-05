@@ -168,6 +168,16 @@ python3 tools/canary-tripwire/canary.py check   # OK ili TRIP + lista
 
 Inertni mamci (bez pravih kredencijala), dnevna provjera, na TRIP se ide po B6 runbooku.
 
+### T10 · ✅ `shield-audit` — jedna komanda, cijela provjera (B-ocjena: runner postoji)
+
+```bash
+python3 tools/shield-audit/audit.py --hosts $(cat domains.txt) --out-dir ./audit
+# → asset.json + tls.json + sbom.json + report.json + sažetak na ekranu
+# + napomena: identity-provjere ostaju skill-vođene (S1), jer su platform-specifične
+```
+
+Read-only, spaja T4+T5+T9+T8. Testiran end-to-end na test-labu.
+
 ### T9 · ✅ `sbom-inventory` — šta je instalirano (prioritet 8)
 
 ```bash

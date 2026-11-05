@@ -92,6 +92,17 @@ with tempfile.TemporaryDirectory() as t:
     got = json.loads(json.loads(r.stdout)["result"]["content"][0]["text"])["source"]
     check("t3 sources-format", got == ["A", "B"])
 
+# --- shield-audit: end-to-end runner (localhost tls fails gracefully) ---
+with tempfile.TemporaryDirectory() as t:
+    out = os.path.join(t, "rep")
+    r = subprocess.run([sys.executable, os.path.join(REPO, "tools", "shield-audit", "audit.py"),
+                        "--hosts", "127.0.0.1", "--out-dir", out],
+                       capture_output=True, text=True, timeout=120)
+    check("audit runs", r.returncode == 0)
+    rep = json.load(open(os.path.join(out, "report.json")))
+    check("audit report keys", set(("ts", "hosts", "files", "summary")) <= set(rep))
+    check("audit files exist", all(os.path.exists(rep["files"][k]) for k in ("asset", "tls", "sbom")))
+
 # --- shield-status: composer over canned outputs ---
 ST = os.path.join(REPO, "tools", "shield-status", "status.py")
 with tempfile.TemporaryDirectory() as t:

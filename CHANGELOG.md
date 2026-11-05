@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.8.0 — 2026-11-05
+- Novo: T10 `shield-audit` — jedna komanda pokreće T4+T5+T9+T8 i izdaje report.json.
+- Fix: `%zone` sufiks više ne jede port (T4).
+- E2E test runnera na test-labu.
+
 ## 1.7.1 — 2026-11-05
 - `install.sh --check`: preflight preduvjeta (obavezni python3>=3.8, git; opcioni openssl/ss/docker); install odbija bez obaveznih.
 - Testovi za oba slucaja (ima/nema dependencija).

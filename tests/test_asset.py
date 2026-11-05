@@ -28,7 +28,7 @@ check("9100 localhost", by_port.get("9100", {}).get("exposure") == "localhost")
 check("53 private(tailscale)", by_port.get("53", {}).get("exposure") == "private")
 check("8083 ipv6 public", by_port.get("8083", {}).get("exposure") == "public")
 priv53 = [x for x in d["listeners"] if x["port"] == "53"]
-check("53 sve private", len(priv53) == 2 and all(x["exposure"] == "private" for x in priv53))
+check("53 sve private", len(priv53) == 3 and all(x["exposure"] == "private" for x in priv53))
 
 snap = os.path.join(BASE, "snap-test.json")
 subprocess.run([sys.executable, INV, "--ss-file", FIX, "--snap", snap],

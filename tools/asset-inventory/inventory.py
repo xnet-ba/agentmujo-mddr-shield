@@ -28,9 +28,9 @@ def parse_ss(text):
         parts = ln.split()
         if len(parts) < 5:
             continue
-        local = parts[3].split("%")[0]  # strip %iface zone
+        local = parts[3]
         addr, _, port = local.rpartition(":")
-        addr = addr.strip("[]")
+        addr = addr.strip("[]").split("%")[0]  # strip [ ] + %iface zone
         try:
             if addr in ("127.0.0.1", "::1"):
                 exposure = "localhost"
