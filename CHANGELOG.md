@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.1 — 2026-11-05
+- `install.sh --check`: preflight preduvjeta (obavezni python3>=3.8, git; opcioni openssl/ss/docker); install odbija bez obaveznih.
+- Testovi za oba slucaja (ima/nema dependencija).
+
 ## 1.7.0 — 2026-11-05
 - Novo: T9 `sbom-inventory` (pip/npm/dpkg/docker → JSON, read-only).
 - Uživo na test-labu: 93/10/1541/19.

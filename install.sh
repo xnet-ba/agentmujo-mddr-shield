@@ -1,9 +1,24 @@
 #!/bin/bash
 # install.sh — install mddr-shield on ANY OpenCode agent. Idempotent.
-# Usage: ./install.sh [--home DIR] (default $HOME)
+# Usage: ./install.sh [--home DIR] | ./install.sh --check
 # Does: copy skills -> skills dir, server+tools -> data dir, add threat-feed MCP (with backup).
 set -u
 REPO="$(cd "$(dirname "$0")" && pwd)"
+
+doctor() {
+  # preflight: hard deps must exist, soft deps only reported
+  local fail=0
+  for c in python3 git; do
+    if command -v "$c" >/dev/null; then echo "OK   $c"; else echo "FALI $c (obavezno)"; fail=1; fi
+  done
+  python3 -c "import sys; assert sys.version_info >= (3,8)" 2>/dev/null && echo "OK   python3 >= 3.8" || { echo "FALI python3 >= 3.8"; fail=1; }
+  for c in openssl ss docker; do
+    if command -v "$c" >/dev/null; then echo "OK   $c"; else echo "--   $c (opciono: tls-inventory / asset-inventory / sbom-dio)"; fi
+  done
+  return $fail
+}
+[ "${1:-}" = "--check" ] && { doctor; exit $?; }
+doctor >/dev/null || { echo "nedostaju obavezni preduvjeti (--check za detalje)"; exit 1; }
 HOME_DIR="${1:-$HOME}"
 [ "${1:-}" = "--home" ] && HOME_DIR="${2:-$HOME}"
 SKILLS_DIR="$HOME_DIR/.config/opencode/skills"

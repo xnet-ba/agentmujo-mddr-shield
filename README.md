@@ -232,6 +232,7 @@ Priključak na OpenCode (`opencode.json → mcp`):
 git clone https://github.com/xnet-ba/agentmujo-mddr-shield.git
 cd agentmujo-mddr-shield
 ./install.sh            # skills + MCP + data dir, idempotentno, uz backup
+./install.sh --check    # preflight: python3/git obavezni, openssl/ss/docker opcioni
 # ./uninstall.sh        # potpuno uklanjanje, cuva rucne izmjene skillova
 ```
 Radi na **bilo kojem OpenCode agentu**: staze se izvode iz `$HOME`, jedina zavisnost je `python3` (stdlib) i `openssl` za B2. test server nam služi kao test-poligon — installer je ovdje verificiran.

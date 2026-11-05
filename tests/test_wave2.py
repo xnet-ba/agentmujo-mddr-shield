@@ -108,5 +108,15 @@ with tempfile.TemporaryDirectory() as t:
     r = subprocess.run([sys.executable, ST], capture_output=True, text=True)
     check("status needs args", r.returncode == 2)
 
+# --- installer doctor ---
+r = subprocess.run(["bash", os.path.join(REPO, "install.sh"), "--check"],
+                   capture_output=True, text=True)
+check("doctor runs", r.returncode == 0 and "OK" in r.stdout)
+r = subprocess.run(["bash", "-c",
+                    'PATH=/nonexistent install.sh --check'.replace(
+                        "install.sh", os.path.join(REPO, "install.sh"))],
+                   capture_output=True, text=True)
+check("doctor fails without deps", r.returncode != 0 and "FALI" in r.stdout)
+
 print("FAILURES:", failures if failures else "none")
 sys.exit(1 if failures else 0)
