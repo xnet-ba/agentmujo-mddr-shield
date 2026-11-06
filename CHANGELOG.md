@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.12.0 — 2026-11-06
+- Audit-runda 3: --strict fix + test; offline testovi (audit fixture, cve bez mreze); canary TAMPERED za obrisane + REFUSE exit 1 + --force; installer: validacija prije kopiranja, timestamped backup, cuvanje korisnickog feeda, strog uninstall; sirena redakcija; audit partial report; README neutralizacija; druga purge-runda (/home/user, panel CLI, bez brojki domena); __pycache__ izbacen iz historije; CI prosao.
+
 ## 1.11.0 — 2026-11-06
 - Audit-runda 2: fail-closed za prazne ulaze + --strict (COR-001); alog 0600+escape+redakcija+test (SEC-001); HEAD anonimiziran (SEC-004, historija ceka odluku); installer JSONC/atomski/zastita podataka (SEC-003); cve pokrivenost+multiarch+args (COR-002); frontmatter (DOC-001); canary TAMPERED-refuse+read-scope (SEC-002); ipaddress+docker opsezi (COR-003); MCP validacija+ping (COR-004); README popravke (DOC-002); strozi lint (COR-006); SECURITY+CI (ARH-001).
 

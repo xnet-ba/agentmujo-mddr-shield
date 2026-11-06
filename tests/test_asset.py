@@ -60,6 +60,9 @@ with _tf2.TemporaryDirectory() as t:
     _js2.dump({"listeners": [{"addr": "0.0.0.0", "port": "22", "exposure": "public"}]}, open(ok, "w"))
     r = _sp2.run([sys.executable, ST, "--asset", ok, "--tls", e], capture_output=True, text=True)
     check("status partial exits 1", r.returncode == 1)
+    r = _sp2.run([sys.executable, ST, "--asset", ok, "--tls", e, "--strict"],
+                 capture_output=True, text=True)
+    check("status strict exits 1 on unknown", r.returncode == 1 and "STRICT" in r.stdout)
 
 print("FAILURES:", failures if failures else "none")
 sys.exit(1 if failures else 0)

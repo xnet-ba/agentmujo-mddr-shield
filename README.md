@@ -10,7 +10,7 @@
 [![Platform](https://img.shields.io/badge/Platform-OpenCode-blue.svg)](https://opencode.ai)
 [![MCP](https://img.shields.io/badge/MCP-stdio-red.svg)](#-mcp-server)
 [![Source](https://img.shields.io/badge/Source-MDDR_2026-grey.svg)](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf)
-[![Status](https://img.shields.io/badge/Status-v1.10_stable-success.svg)](#)
+[![Status](https://img.shields.io/badge/Status-v1.12_stable-success.svg)](#)
 [![Skills](https://img.shields.io/badge/Skills-7-orange.svg)](#-skills)
 [![Tools](https://img.shields.io/badge/Tools-10-purple.svg)](#-tools)
 
@@ -275,7 +275,7 @@ python3 tools/shield-audit/audit.py --hosts $(cat domains.txt) --out-dir ./audit
 
 <div align="center">
 
-## ✔️ Verifikacija (v1.10 — 58 asserta, svi zeleni)
+## ✔️ Verifikacija (v1.12 — 60 asserta, svi zeleni)
 
 </div>
 
@@ -285,6 +285,7 @@ python3 tools/shield-audit/audit.py --hosts $(cat domains.txt) --out-dir ./audit
 | T2 `alog.sh` | Self-test upis + čitanje | ✅ validan JSONL red |
 | T3 `server.py` | initialize → tools/list → stats → lookup | ✅ sva 4 odgovora ispravna |
 | S1–S4 | Format SKILL.md (Purpose/Guidance/Expected Output) | ✅ kompatibilno s OpenCode + skills-packs |
+| Svi alati | Offline fixture-testovi + live smoke na test-labu | ✅ vidi tests/ |
 | T4–T9 | Fixture + live testovi + install round-trip | ✅ vidi tests/ |
 | T10 `audit.py` | E2E runner na test-labu | ✅ report.json + 4 artefakta |
 | T3 `server.py` | 8 slucajeva (bad input, notifikacije, malformed feed) | ✅ bez pada |
