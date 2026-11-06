@@ -41,11 +41,20 @@ def main():
             print(f"WARN: {name}: {e}")
 
     if isinstance(A, dict) and not A.get("listeners") and not e1:
-        print("WARN: asset has no listeners — ss may have failed; treating as unknown")
-        asset_state = "unknown"
+        print("WARN: asset has no listeners \u2014 failing closed")
+        asset_state, bad = "unknown", True
     else:
-        asset_state = "ok" if not e1 else "error"
-    tls_state = "ok" if not e2 else "error"
+        asset_state = "unknown" if e1 else "ok"
+        bad = bad or bool(e1)
+    if isinstance(T, list) and not T and not e2:
+        print("WARN: tls list empty \u2014 failing closed")
+        tls_state, bad = "unknown", True
+    else:
+        tls_state = "unknown" if e2 else "ok"
+        bad = bad or bool(e2)
+    if "--strict" in sys.argv[1:] and ("unknown" in (asset_state, tls_state) or exp_unk or hsts_unk):
+        print("STRICT: unknown states present")
+        bad = True
 
     pub = sorted({(x.get("addr"), x.get("port")) for x in (A or {}).get("listeners", [])
                   if x.get("exposure") == "public"})

@@ -48,5 +48,18 @@ d2 = json.loads(r2.stdout)
 check("diff nema promjena", d2.get("added") == [] and d2.get("removed") == [])
 os.remove(snap)
 
+# --- status fail-closed: prazan ulaz -> exit 1, strict flag ---
+import subprocess as _sp2, tempfile as _tf2, json as _js2
+with _tf2.TemporaryDirectory() as t:
+    e = os.path.join(t, "e.json"); open(e, "w").write("[]")
+    l = os.path.join(t, "l.json"); open(l, "w").write('{"listeners":[]}')
+    ST = os.path.join(REPO, "tools", "shield-status", "status.py")
+    r = _sp2.run([sys.executable, ST, "--asset", l, "--tls", e], capture_output=True, text=True)
+    check("status empty exits 1", r.returncode == 1 and "unknown" in r.stdout)
+    ok = os.path.join(t, "ok.json")
+    _js2.dump({"listeners": [{"addr": "0.0.0.0", "port": "22", "exposure": "public"}]}, open(ok, "w"))
+    r = _sp2.run([sys.executable, ST, "--asset", ok, "--tls", e], capture_output=True, text=True)
+    check("status partial exits 1", r.returncode == 1)
+
 print("FAILURES:", failures if failures else "none")
 sys.exit(1 if failures else 0)

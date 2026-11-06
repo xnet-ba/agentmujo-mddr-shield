@@ -38,5 +38,20 @@ hits = server.call("threat_lookup", {"query": "qilin"})
 check("t3 lookup qilin", hits.get("matches", 0) >= 1)
 check("t3 unknown tool errors", "error" in server.call("nope", {}))
 
+
+# --- SEC-001: alog escape/redakcija/permisije ---
+import os as _os, stat as _st, subprocess as _sp, tempfile as _tf, json as _js
+with _tf.TemporaryDirectory() as t:
+    log = os.path.join(t, "a.jsonl")
+    env = dict(_os.environ, AGENT_AUDIT_LOG=log)
+    r = _sp.run(["bash", os.path.join(REPO, "tools", "agent-audit-log", "alog.sh"),
+                 'a"x', "tool", "Bearer SECRET123\nnewline\\back", "ok"],
+                capture_output=True, text=True, env=env)
+    assert r.returncode == 0, r.stderr
+    rec = _js.loads(open(log).read())
+    assert rec["agent"] == 'a"x' and "SECRET123" not in rec["action"] and "REDACTED" in rec["action"]
+    assert _st.S_IMODE(_os.stat(log).st_mode) == 0o600
+    print("PASS alog escape+redact+0600")
+
 print("FAILURES:", failures if failures else "none")
 sys.exit(1 if failures else 0)

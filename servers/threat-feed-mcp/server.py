@@ -118,7 +118,7 @@ def main():
             continue
         try:
             req = json.loads(line)
-        except json.JSONDecodeError:
+        except Exception:
             sys.stdout.write(json.dumps({"jsonrpc": "2.0", "id": None,
                                          "error": {"code": -32700, "message": "parse error"}}) + "\n")
             sys.stdout.flush()

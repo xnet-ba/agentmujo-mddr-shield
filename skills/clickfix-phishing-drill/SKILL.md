@@ -15,7 +15,7 @@ Generate safe, measurable social-engineering drill scenarios (ClickFix dialogs, 
 - Every drill must include: what the victim sees, which red flags are embedded, how to report, and a debrief template. No-credential rule: the drill ends at the click/report decision — no fake login pages harvesting input.
 - Sending any drill to real recipients requires explicit written approval from the requester; the default deliverable is the scenario package, not the send.
 - Measure: report rate and report speed, not just click rate. Track improvement across repeated drills.
-- Use AgentMujo Core Skills for planning, research, debugging, verification, and reporting.
+- Use your core planning/research skills for planning, research, debugging, verification, and reporting.
 
 ## Expected Output
 Scenario package (script + red-flag key), scoring sheet template, debrief agenda, and remaining uncertainties. No live send without approval.

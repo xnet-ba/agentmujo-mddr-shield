@@ -20,7 +20,7 @@ Catch intruders early with tripwire canaries (MDDR assume-breach mindset): inert
 - On TRIP: treat as Runbook 1/3 (ir-runbooks-mdrr) — preserve the canary, snapshot logs, do not tip off by deleting immediately; investigate first, then rotate and redeploy.
 - Never place a canary where legitimate automation writes (backups, log rotation) — false trips erode trust.
 - Minimize exposure of secrets: canaries contain NO real credentials, only tripwire text.
-- Use AgentMujo Core Skills for planning, research, debugging, verification, and reporting.
+- Use your core planning/research skills for planning, research, debugging, verification, and reporting.
 
 ## Expected Output
 Deployment map (dir → canaries), check cadence, trip procedure reference, and remaining uncertainties.

@@ -26,6 +26,8 @@ def main():
             if key in seen:
                 continue
             seen.add(key)
+            i = dict(i)
+            i.setdefault("source", src)
             inds.append(i)
     feed = {"sources": sources, "count": len(inds), "indicators": inds}
     json.dump(feed, open(out, "w"), indent=2, ensure_ascii=False)

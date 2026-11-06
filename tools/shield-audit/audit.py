@@ -56,7 +56,8 @@ def main():
             "--asset", snap, "--tls", tlsf)
     print(r.stdout)
     if r.returncode != 0:
-        print("shield-status reported input problems (see above)")
+        print("shield-status found problems (see above)")
+        sys.exit(1)
     try:
         for f in (snap, tlsf, sbomf):
             json.load(open(f))

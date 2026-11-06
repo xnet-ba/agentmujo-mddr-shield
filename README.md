@@ -8,8 +8,6 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-OpenCode-blue.svg)](https://opencode.ai)
-[![Skills](https://img.shields.io/badge/Skills-4-orange.svg)](#-skills)
-[![Tools](https://img.shields.io/badge/Tools-2-purple.svg)](#-tools)
 [![MCP](https://img.shields.io/badge/MCP-stdio-red.svg)](#-mcp-server)
 [![Source](https://img.shields.io/badge/Source-MDDR_2026-grey.svg)](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf)
 [![Status](https://img.shields.io/badge/Status-v1.10_stable-success.svg)](#)
@@ -75,10 +73,10 @@ agentmujo-mddr-shield/
 | 🎯 Namjena | 10 MDDR prioriteta (str. 7) pretvoriti u checklistu za konkretno okruženje |
 | ❌ Problem koji rješava | Generičke preporuke se nikad ne primijene jer niko ne zna prvi korak |
 | ⚙️ Funkcionalnosti | Prioritet → konkretna provjera → dokaz (komanda + izlaz) → ocjena 🟢🟡🔴 |
-| 📥 Ulaz | Popis sistema (npr. `test-node, test-laptop`) |
+| 📥 Ulaz | Popis sistema (npr. `web1, laptop`) |
 | 📤 Izlaz | Status-tabela + lista stavki za potvrdu + trigger sljedeće provjere |
 | 📦 Zavisnosti | Nema |
-| 💡 Primjer | `Prioritet 2 → panel 2FA: iskljčen 🔴 (provjereno panel-CLI-jem)` |
+| 💡 Primjer | `Prioritet 2 → panel 2FA: isključen 🔴 (provjereno panel-CLI-jem)` |
 | 🔁 Reuse | Svaki budući audit, svaki novi servis |
 
 ### S2 · ✅ `agent-baseline-monitor` — vidi anomaliju koja liči na normalu
@@ -132,7 +130,7 @@ python3 tools/ioc-extract/build_feed.py r1.iocs.json r2.iocs.json -o servers/thr
 
 - Bez zavisnosti (stdlib). Testirano na punom MDDR tekstu: tačno pronalazi
   `CVE-2020-1472`, `Qilin`, `Tycoon2FA`, `Pesky Pika` — svaki s brojem stranice.
-- Ponovno upotrebljivo za **svaki budući izvještaj**.
+- Ponovno upotrebljivo za svaki budući izvještaj **uz dopunu TECH/FAMILY lista** (liste su iz MDDR 2026).
 
 ### T4 · ✅ `asset-inventory` — sljedeći `:8000` se ne čeka, nego se lovi
 ```bash
@@ -178,7 +176,7 @@ python3 tools/cve-match/match.py sbom.json -o vulns.json
 # → queried N packages, M vuln hits (OSV.dev, bez ključa; offline → jasan exit 2)
 ```
 
-pip→PyPI, dpkg→Debian ekosistemi. Debian revizije mogu prebaciti — dokumentirano.
+pip→PyPI, dpkg→Debian ekosistemi. Debian revizije mogu prebaciti; severity/summary su u batch-odgovoru često prazni (prikaz n/a).
 
 ### T10 · ✅ `shield-audit` — jedna komanda, cijela provjera (B-ocjena: runner postoji)
 
@@ -216,7 +214,7 @@ tools/agent-audit-log/alog.sh deploy shell "systemctl status app" ok
 # → {"ts":"...","agent":"deploy","tool":"shell","action":"...","result":"ok"}
 ```
 
-JSONL format (nikad tajne u logu) + mjesečna rotacija + 5 baseline pragova u `SPEC.md`.
+JSONL format (nikad tajne u logu) + ručna rotacija + 5 baseline pragova u `SPEC.md`.
 
 <div align="center">
 
@@ -257,7 +255,7 @@ cd agentmujo-mddr-shield
 ./install.sh --check    # preflight: python3/git obavezni, openssl/ss/docker opcioni
 # ./uninstall.sh        # potpuno uklanjanje, cuva rucne izmjene skillova
 ```
-Radi na **bilo kojem OpenCode agentu**: staze se izvode iz `$HOME`, jedina zavisnost je `python3` (stdlib) i `openssl` za B2. test server nam služi kao test-poligon — installer je ovdje verificiran.
+Radi na **bilo kojem OpenCode agentu**: staze se izvode iz `$HOME`, jedina zavisnost je `python3` (stdlib) i `openssl` za B2. Verificiran na Linux test-labu — installer pokriven testovima u tests/.
 ```bash
 # 1. Pokreni checklistu (S1) nad svojom infrastrukturom
 # 2. Uključi audit-log (T2): export AGENT_AUDIT_LOG=./audit.jsonl

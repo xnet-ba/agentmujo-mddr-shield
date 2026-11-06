@@ -17,7 +17,7 @@ Assess attachment risk before opening, using MDDR 2026 cybercrime delivery stati
   - Archives (zip/iso/img) from unknown senders — treat as hostile until scanned.
 - Procedure: 1) verify sender via separate channel if unexpected; 2) check extension vs. claimed content (double extensions, mismatch); 3) scan with local AV / VirusTotal only if approved; 4) open Office docs with macros disabled; 5) report suspected phish per drill scoring (S3).
 - Minimize exposure of secrets: verdicts reference file names/hashes, never file contents.
-- Use AgentMujo Core Skills for planning, research, debugging, verification, and reporting.
+- Use your core planning/research skills for planning, research, debugging, verification, and reporting.
 
 ## Expected Output
 Risk rating (low/elevated/high) with reasons, safe-handling steps taken, and remaining uncertainties.

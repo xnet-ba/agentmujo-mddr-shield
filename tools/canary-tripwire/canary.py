@@ -31,6 +31,8 @@ def deploy(d, state):
             st = json.load(open(state))
         except Exception:
             pass
+    tampered = []
+    known = {c["path"]: c["sha256"] for c in st.get("canaries", [])}
     for n in CANARY_NAMES:
         p = os.path.join(d, n)
         if os.path.exists(p):
@@ -41,12 +43,21 @@ def deploy(d, state):
             if "tripwire" not in existing.lower():
                 print(f"REFUSE: {p} exists and is not a canary — will not overwrite")
                 continue
+            if p in known and sha(p) != known[p]:
+                print(f"TAMPERED: {p} changed since last deploy — NOT re-baselining, investigate first")
+                tampered.append(p)
+                continue
+            if p in known:
+                continue  # already deployed, unchanged
         else:
             open(p, "w").write(CANARY_TEXT)
         st["canaries"] = [c for c in st["canaries"] if c["path"] != p]
         st["canaries"].append({"path": p, "sha256": sha(p)})
     json.dump(st, open(state, "w"), indent=2)
     print(f"deployed {len(st['canaries'])} canaries in {d}")
+    if tampered:
+        print(f"TAMPERED count: {len(tampered)}")
+        sys.exit(1)
 
 
 def check(state):

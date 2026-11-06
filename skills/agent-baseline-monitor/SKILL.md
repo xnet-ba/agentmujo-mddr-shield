@@ -15,7 +15,7 @@ Detect anomalous AI-agent behavior by comparing live tool-use against a per-agen
 - Apply rules (defaults, calibrate after 2 weeks of logs): shell-burst (>30 shell calls/min) → alert + review; first use of a tool outside the agent's list → alert; activity 01–05h without announced work → alert; >10 deny/error in 5 min → alert + temporary stop proposal; cost 10x above average → review.
 - Threat actors operate through valid credentials and sanctioned workflows, so the finding must show *why* the deviation matters, not just that a threshold fired.
 - Minimize exposure of secrets: truncate action strings, never log tokens or keys.
-- Use AgentMujo Core Skills for planning, research, debugging, verification, and reporting.
+- Use your core planning/research skills for planning, research, debugging, verification, and reporting.
 
 ## Expected Output
 Per-agent baseline profiles, ranked deviations with evidence (log excerpts), threshold-calibration suggestions, and remaining uncertainties.

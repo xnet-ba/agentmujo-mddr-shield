@@ -6,7 +6,7 @@ description: Turn the 10 MDDR 2026 priorities into a verifiable checklist
 
 
 ## Purpose
-Turn the 10 Microsoft Digital Defense Report 2026 priorities (p. 7) into a verifiable checklist for a concrete environment (Test Lab, Test Lab, or any small infra).
+Turn the 10 Microsoft Digital Defense Report 2026 priorities (p. 7) into a verifiable checklist for a concrete environment (any small infra: few hosts + cloud).
 
 ## Guidance
 - Work only within the authorized scope. Read-only checks first (`read-only CLI listing`, `ls`, `stat`, log reads); never change production config without explicit approval.
@@ -15,7 +15,7 @@ Turn the 10 Microsoft Digital Defense Report 2026 priorities (p. 7) into a verif
 - Scale enterprise recommendations down: 2 machines + cloud means the same controls, lighter tooling.
 - Distinguish confirmed findings from hypotheses. Never invent 2FA/MFA status — read it from the system.
 - Minimize exposure of secrets: checklist reports statuses, never keys, tokens, or reset codes.
-- Use AgentMujo Core Skills for planning, research, debugging, verification, and reporting.
+- Use your core planning/research skills for planning, research, debugging, verification, and reporting.
 
 ## Expected Output
 Status table (check → evidence → 🟢/🟡/🔴), list of items needing approval (with exact commands to fix), recommended re-check trigger, and remaining uncertainties.

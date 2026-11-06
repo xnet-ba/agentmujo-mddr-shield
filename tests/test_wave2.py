@@ -89,6 +89,22 @@ with tempfile.TemporaryDirectory() as t:
     r = subprocess.run([sys.executable, CAN, "check", "--state", state],
                        capture_output=True, text=True)
     check("c1 trip detected", r.returncode != 0 and "TRIP" in r.stdout)
+    # refuse re-baseline diranog mamca
+    r = subprocess.run([sys.executable, CAN, "deploy", t, "--state", state],
+                       capture_output=True, text=True)
+    check("c1 refuse re-baseline", r.returncode != 0 and "TAMPERED" in r.stdout)
+    r = subprocess.run([sys.executable, CAN, "check", "--state", state],
+                       capture_output=True, text=True)
+    check("c1 still trips", r.returncode != 0 and "TRIP" in r.stdout)
+    # pravi fajl se ne dira
+    with tempfile.TemporaryDirectory() as t2:
+        real = os.path.join(t2, "passwords-old.csv")
+        open(real, "w").write("hunter2")
+        st2 = os.path.join(t2, "s.json")
+        r = subprocess.run([sys.executable, CAN, "deploy", t2, "--state", st2],
+                           capture_output=True, text=True)
+        check("c1 refuse real file", r.returncode == 0 and "REFUSE" in r.stdout
+              and open(real).read() == "hunter2")
 
 # --- T3: sources-format feed compat via stdio ---
 with tempfile.TemporaryDirectory() as t:

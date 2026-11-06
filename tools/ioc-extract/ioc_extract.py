@@ -28,7 +28,7 @@ TECH = re.compile(
     re.IGNORECASE,
 )
 FAMILY = re.compile(
-    r"\b(Qilin|Akira|PlayCrypt|Gentlemen|INC Ransom|Sinobi|Tycoon2FA|"
+    r"\b(Qilin|Akira|PlayCrypt|(?<!and )Gentlemen|INC Ransom|Sinobi|Tycoon2FA|"
     r"Pesky Pika|TikTok ClickFix)\b"
 )
 SCALE = re.compile(
