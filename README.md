@@ -1,3 +1,19 @@
+<!-- xnet-ba-matrix-header-v1 -->
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=00FF41&height=140&section=header&text=agentmujo-mddr-shield&fontColor=000000&fontSize=32&fontAlignY=32&desc=Operativni%20security-pack%20iz%20MDDR%202026%3A%204%20skills%2C%202%20CLI%20alata&descAlignY=55" width="100%" alt="agentmujo-mddr-shield"/>
+
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&duration=2800&pause=800&color=00FF41&center=true&vCenter=true&width=700&lines=xnet-ba+%3A%3A+open-source+AI+iz+BiH;citaj+README+pa+pokreni;PR+dobrodosli)](https://github.com/xnet-ba/agentmujo-mddr-shield)
+
+[![Stars](https://img.shields.io/github/stars/xnet-ba/agentmujo-mddr-shield?style=flat-square&color=00FF41&labelColor=000000)](https://github.com/xnet-ba/agentmujo-mddr-shield/stargazers)
+[![License](https://img.shields.io/github/license/xnet-ba/agentmujo-mddr-shield?style=flat-square&color=00FF41&labelColor=000000)](LICENSE)
+[![Top lang](https://img.shields.io/github/languages/top/xnet-ba/agentmujo-mddr-shield?style=flat-square&color=00FF41&labelColor=000000)](https://github.com/xnet-ba/agentmujo-mddr-shield)
+[![Last commit](https://img.shields.io/github/last-commit/xnet-ba/agentmujo-mddr-shield?style=flat-square&color=00FF41&labelColor=000000)](https://github.com/xnet-ba/agentmujo-mddr-shield/commits)
+[![matrix](https://img.shields.io/badge/MATRIX-xnet--ba-00FF41?style=flat-square&labelColor=000000)](https://github.com/xnet-ba)
+
+</div>
+
+---
 <div align="center">
 
 # 🛡️ AgentMujo MDDR Shield
@@ -312,4 +328,11 @@ python3 tools/shield-audit/audit.py --hosts $(cat domains.txt) --out-dir ./audit
 
 Izvorni izvještaj: [Microsoft Digital Defense Report 2026 (PDF)](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf) — besplatan javni dokument, vlasništvo Microsofta.
 
+</div>
+
+---
+
+<div align="center">
+<img src="https://raw.githubusercontent.com/xnet-ba/xnet-ba/main/assets/divider.svg" width="100%" alt=""/>
+<sup>part of <a href="https://github.com/xnet-ba">xnet-ba matrix</a> — open-source AI iz BiH</sup>
 </div>
