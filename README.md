@@ -27,6 +27,7 @@
 [![MCP](https://img.shields.io/badge/MCP-stdio-red.svg)](#-mcp-server)
 [![Source](https://img.shields.io/badge/Source-MDDR_2026-grey.svg)](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf)
 [![Status](https://img.shields.io/badge/Status-v1.12_stable-success.svg)](#)
+[![Tests](https://github.com/xnet-ba/agentmujo-mddr-shield/actions/workflows/test.yml/badge.svg)](https://github.com/xnet-ba/agentmujo-mddr-shield/actions/workflows/test.yml)
 [![Skills](https://img.shields.io/badge/Skills-7-orange.svg)](#-skills)
 [![Tools](https://img.shields.io/badge/Tools-10-purple.svg)](#-tools)
 
